@@ -27,7 +27,10 @@ list and competition tag if it isn't there.
 - `goals` and `competition` are optional — fill in whatever you actually know. An absent
   or empty `goals` list is a valid, deliberate "nobody scored" — not the same as the file
   not existing at all (that just skips the scorer list/photo entirely).
-- Featured player photo is picked automatically from `assets/players/` based on `goals`
-  and the match result — see `assets/players/README.md` for exactly how. Add
-  `"featured_player_photo": "celebration/demirovic.jpg"` here to override it manually for
-  one match.
+- `competition` comes straight from whichever OpenLigaDB competition the match was fetched
+  from — `"Bundesliga"`, `"DFB-Pokal"`, `"Champions League"`, `"Europa League"`, or
+  `"Friendly"` — see "Data source notes" in `CLAUDE.md`.
+- Featured player photo is picked automatically from `assets/players/` based on the match
+  result — see `assets/players/README.md` for exactly how. Add
+  `"featured_player_photo": "win/demirovic.jpg"` here to override it manually for one
+  match.
