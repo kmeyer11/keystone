@@ -1,6 +1,5 @@
 import os
 import random
-from collections import Counter
 from PIL import Image, ImageDraw, ImageFont
 from fetch_matches import vfb_matches, latest_played
 from match_events import load_events
@@ -47,28 +46,11 @@ def photos_in(category):
     return [f for f in os.listdir(folder) if not f.startswith(".")]
 
 
-def top_scorer(events):
-    scorers = [g["scorer"] for g in events.get("goals", []) if g["team"] == "vfb"]
-    if not scorers:
-        return None
-    return Counter(scorers).most_common(1)[0][0]
-
-
 def pick_featured_photo(events, result):
-    if events is None:
-        return None
-    if events.get("featured_player_photo"):
+    if events is not None and events.get("featured_player_photo"):
         return events["featured_player_photo"]
 
-    scorer = top_scorer(events)
-    if scorer:
-        surname = scorer.split()[-1].lower()
-        matches = [f for f in photos_in("celebration") if f.lower().split(".")[0].startswith(surname)]
-        pool = matches or photos_in("celebration")
-        if pool:
-            return f"celebration/{random.choice(pool)}"
-
-    category = "devastated" if result == "L" else "disappointed"
+    category = "loss" if result == "L" else "win"
     pool = photos_in(category)
     return f"{category}/{random.choice(pool)}" if pool else None
 
@@ -102,12 +84,17 @@ def load_player_photo(filename, box_width, box_height):
     return photo.resize((box_width, box_height))
 
 
+def line_height(fnt):
+    ascent, descent = fnt.getmetrics()
+    return ascent + descent
+
+
 def centered_text(draw, y, text, fnt, fill, width=WIDTH):
     bbox = draw.textbbox((0, 0), text, font=fnt)
     text_width = bbox[2] - bbox[0]
     x = (width - text_width) / 2
     draw.text((x, y), text, font=fnt, fill=fill)
-    return bbox[3] - bbox[1]
+    return line_height(fnt)
 
 
 def competition_tag(draw, y, label):
@@ -169,9 +156,9 @@ def build_recap(match, out_path, events=None):
     photo = load_player_photo(photo_name, WIDTH, HEIGHT)
     if photo:
         img.paste(photo, (0, 0), photo)
-        draw.rectangle([0, 0, WIDTH, 6], fill=RED)
-        header_tint = Image.new("RGBA", (WIDTH, 134), (*DARK, 170))
-        img.paste(header_tint, (0, 6), header_tint)
+        header_tint = Image.new("RGBA", (WIDTH, 140), (*DARK, 170))
+        img.paste(header_tint, (0, 0), header_tint)
+        draw.rectangle([0, 63, WIDTH, 77], fill=RED)
         body_scrim = scrim_gradient(WIDTH, HEIGHT - 140, 90, 200)
         img.paste(body_scrim, (0, 140), body_scrim)
     else:
@@ -204,11 +191,7 @@ def build_recap(match, out_path, events=None):
     goal_rows = max(len(team_events(events, "vfb")), len(team_events(events, "opponent"))) \
         if events and events.get("goals") else 0
 
-    def line_height(text, fnt):
-        bbox = draw.textbbox((0, 0), text, font=fnt)
-        return bbox[3] - bbox[1]
-
-    content_height = sum(line_height(text, fnt) + gap for text, fnt, gap in lines)
+    content_height = sum(line_height(fnt) + gap for text, fnt, gap in lines)
     content_height += goal_rows * 34
 
     y = max(200, HEIGHT - 60 - content_height)
