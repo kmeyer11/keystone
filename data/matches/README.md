@@ -1,0 +1,31 @@
+# Match events
+
+Manual input. `fetch_matches.py`'s free data source has no scorers or events — see
+"Data source notes" in `CLAUDE.md` — so scorer/goal-time/card data for the recap graphic
+comes from you, by hand, per match. Nothing here is ever fabricated or guessed.
+
+One file per match, named exactly like the recap output: `<date>_<opponent>.json`
+(spaces in the opponent name become underscores) — e.g. `2026-09-04_1._FC_Köln.json`.
+`generate_recap.py` looks up the file by that name and silently skips the scorer/card
+list and competition tag if it isn't there.
+
+```json
+{
+  "competition": "BUNDESLIGA",
+  "goals": [
+    {"minute": "23", "scorer": "D. Undav", "team": "vfb"},
+    {"minute": "90+2", "scorer": "E. Demirovic", "team": "vfb"}
+  ]
+}
+```
+
+- `minute` — string, quote it even for plain numbers (`"23"` not `23`) so stoppage time
+  (`"90+2"`) works the same way.
+- `team` — `"vfb"` or `"opponent"`, not home/away (keeps it independent of venue).
+- `goals` and `competition` are optional — fill in whatever you actually know. An absent
+  or empty `goals` list is a valid, deliberate "nobody scored" — not the same as the file
+  not existing at all (that just skips the scorer list/photo entirely).
+- Featured player photo is picked automatically from `assets/players/` based on `goals`
+  and the match result — see `assets/players/README.md` for exactly how. Add
+  `"featured_player_photo": "celebration/demirovic.jpg"` here to override it manually for
+  one match.

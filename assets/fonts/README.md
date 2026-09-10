@@ -1,11 +1,12 @@
 # Fonts
 
-Drop brand font files here (`.ttf`), e.g. a bold display font for scorelines and a regular
-weight for body text. `generate_recap.py` looks here first (`FONT_BOLD` / `FONT_REGULAR`)
-and falls back to macOS's built-in Arial if this folder is empty, so the script runs
-out of the box without any font files checked in.
+`Bold.ttf` — [Anton](https://fonts.google.com/specimen/Anton), used for the scoreline, team
+names, and result word.
+`Regular.ttf` — [Barlow Condensed](https://fonts.google.com/specimen/Barlow+Condensed)
+Regular, used for the round label and date.
 
-Not gitignored by content-type but font files themselves are excluded (see `.gitignore`) —
-most non-open-license fonts aren't redistributable, so keep them local rather than pushing
-them to a public portfolio repo. Open-license fonts (SIL OFL, Apache, etc.) are fine to
-commit if you want reproducible output — just remove the matching gitignore line.
+Both SIL Open Font License (OFL) — free to use and redistribute, so unlike most fonts
+these two are tracked in git (see `.gitignore`) for reproducible output.
+
+`generate_recap.py` looks here first and falls back to macOS's built-in Arial if this
+folder is empty.

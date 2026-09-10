@@ -7,8 +7,12 @@ __pycache__/
 
 assets/fonts/*
 !assets/fonts/README.md
+!assets/fonts/Bold.ttf
+!assets/fonts/Regular.ttf
 assets/logos/*
 !assets/logos/README.md
+assets/players/*
+!assets/players/README.md
 
 video/clips/*
 !video/clips/README.md
