@@ -8,6 +8,7 @@ WIDTH = HEIGHT = 1080
 RED = (227, 34, 25)
 WHITE = (255, 255, 255)
 DARK = (20, 20, 20)
+INSTAGRAM_HANDLE = "@vfb.ross"
 
 ASSET_FONT_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "fonts")
 MAC_FONT_DIR = "/System/Library/Fonts/Supplemental"
@@ -148,6 +149,16 @@ def event_lists(draw, events, y):
         event_row(draw, event, y + i * row_h, "right")
 
 
+def draw_watermark(img, handle):
+    fnt = font(FONT_REGULAR, 22)
+    layer = Image.new("RGBA", (WIDTH, 40), (0, 0, 0, 0))
+    layer_draw = ImageDraw.Draw(layer)
+    bbox = layer_draw.textbbox((0, 0), handle, font=fnt)
+    tw = bbox[2] - bbox[0]
+    layer_draw.text(((WIDTH - tw) / 2, 8), handle, font=fnt, fill=(*WHITE, 190))
+    img.paste(layer, (0, HEIGHT - 40), layer)
+
+
 def build_recap(match, out_path, events=None):
     img = Image.new("RGB", (WIDTH, HEIGHT), RED)
     draw = ImageDraw.Draw(img)
@@ -200,6 +211,8 @@ def build_recap(match, out_path, events=None):
 
     if goal_rows:
         event_lists(draw, events, y)
+
+    draw_watermark(img, INSTAGRAM_HANDLE)
 
     img.save(out_path)
 
