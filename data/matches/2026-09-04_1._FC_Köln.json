@@ -1,0 +1,30 @@
+{
+  "competition": "Bundesliga",
+  "goals": [
+    {
+      "minute": "39",
+      "scorer": "B. El Khannouss",
+      "team": "vfb"
+    },
+    {
+      "minute": "60",
+      "scorer": "G. Prömel",
+      "team": "vfb"
+    },
+    {
+      "minute": "76",
+      "scorer": "E. Demirovic",
+      "team": "vfb"
+    },
+    {
+      "minute": "81",
+      "scorer": "R. Hendriks",
+      "team": "opponent"
+    },
+    {
+      "minute": "90+1",
+      "scorer": "J. Vagnoman",
+      "team": "vfb"
+    }
+  ]
+}

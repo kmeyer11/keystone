@@ -1,8 +1,10 @@
 # Match events
 
-Manual input. `fetch_matches.py`'s free data source has no scorers or events — see
-"Data source notes" in `CLAUDE.md` — so scorer/goal-time/card data for the recap graphic
-comes from you, by hand, per match. Nothing here is ever fabricated or guessed.
+Fetched automatically by `src/fetch_events.py` from OpenLigaDB (free, no key) — see
+"Data source notes" in `CLAUDE.md`. Run it after a match to populate the file below,
+then run `generate_recap.py`. Nothing here is ever fabricated or guessed: it's always
+real data from OpenLigaDB, or a manual edit you made yourself — `fetch_events.py` asks
+before overwriting a file that already exists.
 
 One file per match, named exactly like the recap output: `<date>_<opponent>.json`
 (spaces in the opponent name become underscores) — e.g. `2026-09-04_1._FC_Köln.json`.
