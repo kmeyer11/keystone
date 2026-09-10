@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "keystone-data": {
+      "command": ".venv/bin/python",
+      "args": ["00-data/mcp_server.py"]
+    }
+  }
+}

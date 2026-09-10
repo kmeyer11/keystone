@@ -26,6 +26,14 @@ has it, or a file here was hand-edited by the project owner, or it isn't shown d
   automatically by `fetch_events.py`; can still be hand-edited/overridden per match.
   Tracked in git (small JSON, not generated output) — also a natural seed corpus for
   `02-captions/`'s planned RAG layer.
+- `mcp_server.py` — MCP server (stdio, `mcp` package, `MCPServer` — mcp 2.x renamed this
+  from `FastMCP`) wrapping `fetch_matches.py`/`match_events.py` as tools for any MCP
+  client: `get_latest_result`, `get_recent_form(n)`, `get_upcoming_fixtures(n)`,
+  `list_matches_with_events`, `get_match_events(date, opponent)`. Each tool returns only
+  the public match fields (`public_match()`) — `raw_goals`/`vfb_team_id` stay internal to
+  `fetch_matches.py`/`fetch_events.py`, not part of the tool contract. Registered for
+  Claude Code in the repo-root `.mcp.json` (runs via `.venv/bin/python`, so `mcp` must be
+  installed in that venv per "Setup" in the root `CLAUDE.md`).
 
 ## Data source notes
 
@@ -46,7 +54,3 @@ OpenLigaDB not having caught up — wait for it rather than fabricating a result
 one-off exception (project owner supplies the real score/scorers directly) is acceptable
 since it's still a real fact, just not yet in OpenLigaDB.
 
-## Not yet built
-
-- MCP server wrapper around `fetch_matches.py` (currently a plain Python function/script
-  — MCP-server framing is a next step, not done yet).

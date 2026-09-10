@@ -12,7 +12,9 @@ code/assets/`CLAUDE.md` — an agent working inside a stage only needs that stag
 be run directly from the repo root.
 
 - `00-data/` — fetch VfB Stuttgart's fixtures, results, and per-goal scorer data from
-  OpenLigaDB. **Built.**
+  OpenLigaDB, also exposed as an MCP server (`mcp_server.py`, registered in the repo-root
+  `.mcp.json`) so any MCP client — Claude Code included — can query real match data as
+  tools instead of importing Python directly. **Built.**
 - `01-recap-graphics/` — render the Instagram recap PNG for the most recently played
   match. **Built.**
 - `02-captions/` — generate the Instagram caption text via `ask_claude()`, grounded in a
@@ -54,7 +56,4 @@ claude setup-token   # one-time, opens a browser — requires Claude Pro/Max/Tea
 - `assets/fonts/*` and `assets/logos/*`, and each stage's own binary-asset subfolders (`01-recap-graphics/players/*`, `03-video-highlights/{clips,music,exports}/*`), are gitignored by content-type (only their `README.md` is tracked, plus the two OFL-licensed font files which are explicitly un-ignored) — fonts are usually non-redistributable, the club crest is trademarked, player photos are copyrighted, and match/music footage is large/licensed binary media, so none of it belongs in a public portfolio repo.
 - Never source club crests, player photos, or music tracks yourself from arbitrary web sources — trademark/copyright risk. Point the project owner at legitimate sources (official club channels, royalty-free/CC libraries) and let them supply the actual files.
 - Cross-stage Python imports (e.g. `01-recap-graphics/generate_recap.py` importing from `00-data/`) go through an explicit `sys.path.insert` relative to `__file__` at the top of the importing file — same relative-pathing idiom already used for asset paths, just extended to imports. Don't add a shared package/`src` layout to avoid this — it's exactly the coupling the stage-folder split is meant to keep visible and minimal.
-
-## Not yet built (cross-cutting)
-
-- MCP server wrapper around `00-data/fetch_matches.py` (currently a plain Python function/script — MCP-server framing is a next step, not done yet).
+- `.mcp.json` (repo root) registers project-scoped MCP servers for Claude Code — currently just `00-data`'s. It runs via `.venv/bin/python`, so the venv (not system Python) needs `mcp` installed. Claude Code asks for approval before running a project's `.mcp.json` servers the first time; that's expected, not a misconfiguration.
