@@ -1,4 +1,4 @@
-output/*.png
+01-recap-graphics/output/*.png
 __pycache__/
 *.pyc
 .venv/
@@ -11,12 +11,12 @@ assets/fonts/*
 !assets/fonts/Regular.ttf
 assets/logos/*
 !assets/logos/README.md
-assets/players/*
-!assets/players/README.md
+01-recap-graphics/players/*
+!01-recap-graphics/players/README.md
 
-video/clips/*
-!video/clips/README.md
-video/music/*
-!video/music/README.md
-video/exports/*
-!video/exports/README.md
+03-video-highlights/clips/*
+!03-video-highlights/clips/README.md
+03-video-highlights/music/*
+!03-video-highlights/music/README.md
+03-video-highlights/exports/*
+!03-video-highlights/exports/README.md

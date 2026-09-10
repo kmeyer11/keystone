@@ -1,6 +1,9 @@
 import os
 import random
+import sys
 from PIL import Image, ImageDraw, ImageFont
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "00-data"))
 from fetch_matches import vfb_matches, latest_played
 from match_events import load_events
 
@@ -13,7 +16,7 @@ INSTAGRAM_HANDLE = "@vfb.ross"
 ASSET_FONT_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "fonts")
 MAC_FONT_DIR = "/System/Library/Fonts/Supplemental"
 CREST_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "logos", "vfb-logo2.png")
-PLAYERS_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "players")
+PLAYERS_DIR = os.path.join(os.path.dirname(__file__), "players")
 
 
 def resolve_font(asset_name, mac_name):
@@ -221,7 +224,8 @@ if __name__ == "__main__":
     matches = vfb_matches()
     match = latest_played(matches)
     events = load_events(match)
-    os.makedirs("output", exist_ok=True)
-    out_path = f"output/{match['date']}_{match['opponent'].replace(' ', '_')}.png"
+    out_dir = os.path.join(os.path.dirname(__file__), "output")
+    os.makedirs(out_dir, exist_ok=True)
+    out_path = os.path.join(out_dir, f"{match['date']}_{match['opponent'].replace(' ', '_')}.png")
     build_recap(match, out_path, events)
     print("saved:", out_path)

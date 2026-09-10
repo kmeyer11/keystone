@@ -17,8 +17,8 @@ variety across posts. If the relevant folder is empty, the graphic just skips th
 (plain red background), same graceful-skip pattern as everything else here.
 
 You can still force a specific photo for one match by setting `featured_player_photo`
-directly in that match's `data/matches/*.json` file — it takes priority over the
-automatic pick. See `data/matches/README.md`.
+directly in that match's `00-data/matches/*.json` file — it takes priority over the
+automatic pick. See `00-data/matches/README.md`.
 
 Gitignored (see `.gitignore`): match photography is copyrighted, so source your own
 (rights you hold) and keep it local rather than committing it to a public repo.

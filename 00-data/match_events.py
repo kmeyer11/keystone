@@ -1,7 +1,7 @@
 import json
 import os
 
-EVENTS_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "matches")
+EVENTS_DIR = os.path.join(os.path.dirname(__file__), "matches")
 
 
 def events_path(match, events_dir=EVENTS_DIR):
